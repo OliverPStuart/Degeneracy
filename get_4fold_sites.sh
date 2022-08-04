@@ -12,18 +12,12 @@
 # adjusted. Assume gff is gzipped.
 ###################################
 
-gff='/lore/tyler.kent/rice/Oryza_sativa.IRGSP-1.0.33.chr.gff3.gz'
-#gff='/ohta/tyler.kent/Storage/Crubella_183_v1.0.gene_exons.gff3.gz'
-#fasta='/ohta/tyler.kent/Storage/Capsella_rubella_v1.0_combined.fasta'
-fasta='/lore/tyler.kent/rice/Oryza_sativa.IRGSP-1.0.dna.toplevel.fa'
-#CDSbedout='test.bed'
-CDSbedout='/lore/tyler.kent/rice/Os_CDS.bed'
-#fastaCDSout='test.tab'
-fastaCDSout='/lore/tyler.kent/rice/Os_CDS.tab'
-#longestonly='test.longest.tab'
-#longestonly='/ohta/tyler.kent/BMap/Data/Thal_CDS.longest.tab'
-#fourfoldbedout='test.4fold'
-fourfoldbedout='/lore/tyler.kent/rice/Os_degenerate'
+working_dir=/Volumes/Alter/LHISI
+gff=${working_dir}/References/Annotation/LHISI_Scaffold_Assembly.annotation.gff.gz
+fasta=${working_dir}//References/LHISI_Scaffold_Assembly.fasta
+CDSbedout=${working_dir}/Analyses/DeleteriousMutations/LHISI_cds.bed
+fastaCDSout=${working_dir}/Analyses/DeleteriousMutations/LHISI_cds.tab
+fourfoldbedout=${working_dir}/Analyses/DeleteriousMutations/LHISI_degenerate
 
 ###################################
 # STEP 1: GET BED FILE OF CDS AND
@@ -36,7 +30,7 @@ fourfoldbedout='/lore/tyler.kent/rice/Os_degenerate'
 # codon.
 ###################################
 
-#bash gff2bed.sh <(zcat ${gff}) CDS | awk -f gffphaseshift.awk - > ${CDSbedout}
+bash gff2bed.sh ${gff} CDS | awk -f gffphaseshift.awk - > ${CDSbedout}
 
 ###################################
 # STEP 2: USE BED FILE AND FASTA
@@ -47,7 +41,7 @@ fourfoldbedout='/lore/tyler.kent/rice/Os_degenerate'
 # format.
 ###################################
 
-#bedtools getfasta -s -tab -name -fi ${fasta} -bed ${CDSbedout} > ${fastaCDSout}
+bedtools getfasta -s -tab -name -fi ${fasta} -bed ${CDSbedout} > ${fastaCDSout}
 
 ###################################
 # STEP 3: KEEP ONLY LONGEST 
